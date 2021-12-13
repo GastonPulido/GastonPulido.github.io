@@ -17,87 +17,117 @@
         
         //Contador de Preguntas
         let contador = 1;
+        //Ya saludo?
+        let saludo = 0;
         //Función para Obtener Respuesta 
         function respuestas(){
 
             var texto = document.getElementById('consulta').value;
-            var resp;
-            var tipoPreg;
+            texto = texto.toLocaleLowerCase();
         
             for(i = 0;i < 1;i++){
                 if(texto.indexOf('hola') >= 0 || texto.indexOf('buen') >= 0 || texto.indexOf('buenos') >= 0 || texto.indexOf('buenas') >= 0){
                     tipoPreg = 1;
-                } else if(texto.indexOf('direccion') >= 0 || texto.indexOf('ubicacion') >= 0){
+                    saludo++; 
+                } else if(texto.indexOf('direccion') >= 0 || texto.indexOf('dirección') >= 0 || texto.indexOf('ubicacion') >= 0 || texto.indexOf('ubicación') >= 0 || texto.indexOf('lugar') >= 0 || texto.indexOf('domicilio') >= 0){
                     tipoPreg = 2;
-                } else if(texto.indexOf('hora') >= 0 || texto.indexOf('horarios') >= 0|| texto.indexOf('atencion') >= 0){
+                } else if(texto.indexOf('hora') >= 0 || texto.indexOf('horario') >= 0 || texto.indexOf('horarios') >= 0|| texto.indexOf('atencion') >= 0){
                     tipoPreg = 3;
-                } else {
+                } else if(texto.indexOf('forma') >= 0 || texto.indexOf('formas') >= 0 || texto.indexOf('pago') >= 0|| texto.indexOf('efectivo') >= 0|| texto.indexOf('tarjeta') >= 0|| texto.indexOf('tarjetas') >= 0|| texto.indexOf('debito') >= 0|| texto.indexOf('credito') >= 0){
                     tipoPreg = 4;
+                } else if(texto.indexOf('descuento') >= 0 || texto.indexOf('descuentos') >= 0 || texto.indexOf('promoción') >= 0 || texto.indexOf('promociónes') >= 0){
+                    tipoPreg = 5;
+                } else if(texto.indexOf('envio') >= 0 || texto.indexOf('envios') >= 0 || texto.indexOf('delivery') >= 0 || texto.indexOf('entrega') >= 0 || texto.indexOf('entregas') >= 0){
+                    tipoPreg = 6;
+                } else{
+                    tipoPreg = 7;
+                }   
             }
         
-        }   
+            if(tipoPreg == 1 && saludo < 2){
+                resp = 'Hola, gracias por comunicarte con nosotros';
+            } else if(tipoPreg == 1 && saludo > 1){
+                resp = '¿Como lo podemos ayudar?';
+            } else if(tipoPreg == 2){
+                resp = 'Nuestra ubicación es: Calle Corrientes, n° 347';
+            } else if (tipoPreg == 3){
+                resp = 'Trabajamos de Lunes a Viernes, de 10hs a 18hs'; 
+            } else if (tipoPreg == 4){
+                resp = 'Recibimos efectivo y tarjetas de debito y credito';
+            } else if (tipoPreg == 5){
+                resp = 'Descuentos y promociones en: www.Pagina.com';
+            } else if (tipoPreg == 6){
+                resp = 'Comunicarse con 2615566778 para coordinar';
+            } else if (tipoPreg == 7){
+                resp = 'Sugerimos comunicarse al numero: 2615566778';
+            }
 
-        if(tipoPreg == 1){
-            resp = 'Hola';
-        } else if(tipoPreg == 2){
-            resp = 'Nuestra ubicación es: Calle nnn 1111';
-        } else if (tipoPreg == 3){
-            resp = 'Trabajamos de Lunes a Viernes' 
-        } else{
-            resp = ' Comunicarse con 1111111'
+            return resp;
+    
         }
+    
+        //Función para Mostrar Pregunta y Respuesta
+        function consultar(){
+            
+            numero = contador++;
 
-        return resp;
-    
-    }
-    
-    //Función para Mostrar Pregunta y Respuesta
-    function consultar(){
+            if(numero >= 10){
+                numero = numero - 9;
+            } else if(numero >= 7){
+                numero = numero - 6;
+            } else if(numero >= 4){
+                numero = numero - 3; 
+            }
+
+            var pregunta = document.getElementById('consulta').value;
+            var respuesta = respuestas();
+
+            if(numero == 1){
+                document.getElementById('pregunta1').value = pregunta;
+                document.getElementById('respuesta1').value = respuesta;     
+            }
+            if(numero == 2){
+                document.getElementById('pregunta2').value = pregunta;
+                document.getElementById('respuesta2').value = respuesta;     
+            }
+            if(numero == 3){
+                document.getElementById('pregunta3').value = pregunta;
+                document.getElementById('respuesta3').value = respuesta;     
+            }
+
+            document.getElementById('consulta').value = "";
         
-        numero = contador++;
-        var pregunta = document.getElementById('consulta').value;
-        var respuesta = respuestas();
-
-        if(numero == 1){
-            document.getElementById('pregunta1').value = pregunta;
-            document.getElementById('respuesta1').value = respuesta;     
         }
-        if(numero == 2){
-            document.getElementById('pregunta2').value = pregunta;
-            document.getElementById('respuesta2').value = respuesta;     
-        }
-        if(numero == 3){
-            document.getElementById('pregunta3').value = pregunta;
-            document.getElementById('respuesta3').value = respuesta;     
-        }
-    
-    }
 
     </script>
     
     <!--HTML-->
-    
+     
     <!--Formulario-->
     <form class="chat">
+
+        <h1 class="titulo">CHAT DE CONSULTA</h1>
         
         <section class="conversacion">
             <!--Pregunta Uno-->
-            <input type="text" id="pregunta1" placeholder="Consulta">
-            <input type="text" id="respuesta1" placeholder="Respuesta">
+            <input type="text" id="pregunta1">
+            <input type="text" id="respuesta1">
             <!--Pregunta Dos-->
-            <input type="text" id="pregunta2" placeholder="Consulta">
-            <input type="text" id="respuesta2" placeholder="Respuesta">
+            <input type="text" id="pregunta2">
+            <input type="text" id="respuesta2">
             <!--Pregunta Tres-->
-            <input type="text" id="pregunta3" placeholder="Consulta">
-            <input type="text" id="respuesta3" placeholder="Respuesta">
+            <input type="text" id="pregunta3">
+            <input type="text" id="respuesta3">
         </section>
         
-        <!--Consulta-->
-        <input type="text" id="consulta" placeholder="Ingresar consulta sin signos">
-        
-        <!--Enviar-->
-        <input type="button" value="Enviar Mensaje" onclick='consultar()'>
-    
+        <section class="consultaEnviar">
+            <!--Consulta-->
+            <input type="text" id="consulta" placeholder="Consulta...">
+            <!--Enviar-->
+            <input type="button" value="Enviar" id="confirmacion" onclick='consultar()'>
+
+        </section>
+
     </form>
 
 </body>
